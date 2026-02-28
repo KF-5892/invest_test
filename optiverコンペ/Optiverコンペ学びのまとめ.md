@@ -236,59 +236,125 @@ tonic氏は8Fold CVを採用し、MAEとCV間の安定性（stable_loss）をモ
 
 ---
 
-## References
+---
 
-1. [OptiverCan-Zhan-Ji-_Yin-metaruJie-Fa.pdf](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/41285876/21e34422-cc0a-41e6-9606-811ae4b522e4/OptiverCan-Zhan-Ji-_Yin-metaruJie-Fa.pdf?AWSAccessKeyId=ASIA2F3EMEYEQTYUCFT5&Signature=rT6Yxbh%2BnU3AML7g18mcW%2FNMlyU%3D&x-amz-security-token=IQoJb3JpZ2luX2VjEDwaCXVzLWVhc3QtMSJHMEUCIDsltygbPMVOzVMF7HCOR8OWsN44j296NtyMDn96jaG1AiEAtdVn2rZ75v0hqVJnk4dRAmHR8KNGbePgdguhvNBEV6Qq8wQIBBABGgw2OTk3NTMzMDk3MDUiDNDKS31wvP52s1RTgyrQBON769HlIYOc0qnkRY%2Frmc%2FWVqw4V4fB88aN3ryDkUxVOVs3FBcxrdMN4XT6MTXbANWtJKAjbF4LCYCzlHja%2BUbKHd5wkg68g7MHbdxaRbBdHB8%2BvdR0zmDJGoUb6bo8iDI0X5YTpZ6F%2B9JBXElA5zywOaVYzSf0QR1UqcdI7SvZPgCrpOYgyySiAcn%2Bs7EpLZJX1qizK9Lw1hexIdLH9y7hzzjuhPW4FLqhNyYU4mo%2B5hyL%2BMgvMrSBPyJUZmE3B2iWuwRe%2FWjNBrwM6zTYj%2B9XdrdPwH%2B8NFDoj2vHT3H%2Fl3AZkCcJpwVUgGgD02rp09qacEOM5iIp0tdL1cmm6qPzBSGpWmGLK%2FhBVPA6kA%2F8DtOxvT%2B%2BdcwyBlW8LksEaodGGYsrlwzDa0UQliH8BppdNWFrg8oFDXdWDSqigEFN2JfNQUKR2tgIxtHLioKvjxzP6cmGucWRl7y4g7fLJxtnsJhC13WGltQZt6nqCRiEDETn5%2B719KinMsawhoZNTChNdKzclQStBGj2sx1nzLnZ7nAJ1Z7NEvpoE8kaZYjMtD%2FTF4kst8AqaDJploTzuVIOqzW2Fu0HdvlghoS%2FfT4mBZukm55kwug%2BifcZK24h1DXQZXl7TfksW6nUgFZhnDHj1ZK5TgwdMJGJuq%2FsCTIKYwMfEQLf1LwUzafFWVjwLvoVOeTBdxy2xPR9CJKbkwAewgMDIj19nY7BeqWiMM7EuW4c%2FUYEhkD4RYf9kV3gljFgnrIlOsctNotHnjvXncREw62P%2BLzz7vegK%2FA0ugwwyrDBzAY6mAEOWfObM7w48iUJFWv8ouuxb%2BQ%2BoNFGl6CAS3ECs3f7pihX2bTzQDGMdmQxpKegA6ezuqDUo2H%2BJfClA0ZfJxNHis62wu7nNpkogH9vDKLfdJp2t5QtltuSnpTO6RF15bkMXMGxuLOdbkFUCpkZ6KZ%2Bmt0ingOfRl63x57J96JhG6IlRRRUK8k9ClaZXShiExu9dJQIa0%2FoZQ%3D%3D&Expires=1771071737) - Optiver 参戦記& 銀メダル解法
-tonic
-2024/05/23
+## 付録A. 勉強会 議事録（原文）
 
-1. 自己紹介
-tonic（＠tonic3561）
- フリーランスDS
- Kaggler
+> 以下は2024年5月23日マケデコ勉強会の議事録原文。本ドキュメントの各セクションはこの議事録と
+> 3つの発表PDF（docswell-K6YQ3E.pdf、Optiver参戦記_銀メダル解法.pdf、makedeco-optiver-main/slide/）を
+> 統合・分析して作成されている。
 
-目次
-1. ざっくり解法
-2. ...
+マケデコ「Optiverコンペ Kaggle上位解法勉強会」議事録
 
-2. [slide.pdf](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/41285876/9d8ce460-4f28-41af-832f-3bea00eda629/slide.pdf?AWSAccessKeyId=ASIA2F3EMEYEQTYUCFT5&Signature=OmTpSer4yqPtRq9AWDdyFPyvsew%3D&x-amz-security-token=IQoJb3JpZ2luX2VjEDwaCXVzLWVhc3QtMSJHMEUCIDsltygbPMVOzVMF7HCOR8OWsN44j296NtyMDn96jaG1AiEAtdVn2rZ75v0hqVJnk4dRAmHR8KNGbePgdguhvNBEV6Qq8wQIBBABGgw2OTk3NTMzMDk3MDUiDNDKS31wvP52s1RTgyrQBON769HlIYOc0qnkRY%2Frmc%2FWVqw4V4fB88aN3ryDkUxVOVs3FBcxrdMN4XT6MTXbANWtJKAjbF4LCYCzlHja%2BUbKHd5wkg68g7MHbdxaRbBdHB8%2BvdR0zmDJGoUb6bo8iDI0X5YTpZ6F%2B9JBXElA5zywOaVYzSf0QR1UqcdI7SvZPgCrpOYgyySiAcn%2Bs7EpLZJX1qizK9Lw1hexIdLH9y7hzzjuhPW4FLqhNyYU4mo%2B5hyL%2BMgvMrSBPyJUZmE3B2iWuwRe%2FWjNBrwM6zTYj%2B9XdrdPwH%2B8NFDoj2vHT3H%2Fl3AZkCcJpwVUgGgD02rp09qacEOM5iIp0tdL1cmm6qPzBSGpWmGLK%2FhBVPA6kA%2F8DtOxvT%2B%2BdcwyBlW8LksEaodGGYsrlwzDa0UQliH8BppdNWFrg8oFDXdWDSqigEFN2JfNQUKR2tgIxtHLioKvjxzP6cmGucWRl7y4g7fLJxtnsJhC13WGltQZt6nqCRiEDETn5%2B719KinMsawhoZNTChNdKzclQStBGj2sx1nzLnZ7nAJ1Z7NEvpoE8kaZYjMtD%2FTF4kst8AqaDJploTzuVIOqzW2Fu0HdvlghoS%2FfT4mBZukm55kwug%2BifcZK24h1DXQZXl7TfksW6nUgFZhnDHj1ZK5TgwdMJGJuq%2FsCTIKYwMfEQLf1LwUzafFWVjwLvoVOeTBdxy2xPR9CJKbkwAewgMDIj19nY7BeqWiMM7EuW4c%2FUYEhkD4RYf9kV3gljFgnrIlOsctNotHnjvXncREw62P%2BLzz7vegK%2FA0ugwwyrDBzAY6mAEOWfObM7w48iUJFWv8ouuxb%2BQ%2BoNFGl6CAS3ECs3f7pihX2bTzQDGMdmQxpKegA6ezuqDUo2H%2BJfClA0ZfJxNHis62wu7nNpkogH9vDKLfdJp2t5QtltuSnpTO6RF15bkMXMGxuLOdbkFUCpkZ6KZ%2Bmt0ingOfRl63x57J96JhG6IlRRRUK8k9ClaZXShiExu9dJQIa0%2FoZQ%3D%3D&Expires=1771071737) - Optiver trading at the close 上位解法まとめ
- @richwomanbtc
-1
+**開催日時**: 2024年5月23日 19:30〜 **主催**: マケデコ (Market API Developer Community) **司会**: 北山氏
 
-概要
-上位解法まとめ
-特に7th solutionモデルに着目
-Kaggle初心者目線
-K...
+1. 概要
 
-3. [docswell-K6YQ3E.pdf](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/41285876/c52db49d-6411-445a-b028-eb667f3365ec/docswell-K6YQ3E.pdf?AWSAccessKeyId=ASIA2F3EMEYEQTYUCFT5&Signature=zh%2FrOC2bM8jFCitmDkI3kUzZvC8%3D&x-amz-security-token=IQoJb3JpZ2luX2VjEDwaCXVzLWVhc3QtMSJHMEUCIDsltygbPMVOzVMF7HCOR8OWsN44j296NtyMDn96jaG1AiEAtdVn2rZ75v0hqVJnk4dRAmHR8KNGbePgdguhvNBEV6Qq8wQIBBABGgw2OTk3NTMzMDk3MDUiDNDKS31wvP52s1RTgyrQBON769HlIYOc0qnkRY%2Frmc%2FWVqw4V4fB88aN3ryDkUxVOVs3FBcxrdMN4XT6MTXbANWtJKAjbF4LCYCzlHja%2BUbKHd5wkg68g7MHbdxaRbBdHB8%2BvdR0zmDJGoUb6bo8iDI0X5YTpZ6F%2B9JBXElA5zywOaVYzSf0QR1UqcdI7SvZPgCrpOYgyySiAcn%2Bs7EpLZJX1qizK9Lw1hexIdLH9y7hzzjuhPW4FLqhNyYU4mo%2B5hyL%2BMgvMrSBPyJUZmE3B2iWuwRe%2FWjNBrwM6zTYj%2B9XdrdPwH%2B8NFDoj2vHT3H%2Fl3AZkCcJpwVUgGgD02rp09qacEOM5iIp0tdL1cmm6qPzBSGpWmGLK%2FhBVPA6kA%2F8DtOxvT%2B%2BdcwyBlW8LksEaodGGYsrlwzDa0UQliH8BppdNWFrg8oFDXdWDSqigEFN2JfNQUKR2tgIxtHLioKvjxzP6cmGucWRl7y4g7fLJxtnsJhC13WGltQZt6nqCRiEDETn5%2B719KinMsawhoZNTChNdKzclQStBGj2sx1nzLnZ7nAJ1Z7NEvpoE8kaZYjMtD%2FTF4kst8AqaDJploTzuVIOqzW2Fu0HdvlghoS%2FfT4mBZukm55kwug%2BifcZK24h1DXQZXl7TfksW6nUgFZhnDHj1ZK5TgwdMJGJuq%2FsCTIKYwMfEQLf1LwUzafFWVjwLvoVOeTBdxy2xPR9CJKbkwAewgMDIj19nY7BeqWiMM7EuW4c%2FUYEhkD4RYf9kV3gljFgnrIlOsctNotHnjvXncREw62P%2BLzz7vegK%2FA0ugwwyrDBzAY6mAEOWfObM7w48iUJFWv8ouuxb%2BQ%2BoNFGl6CAS3ECs3f7pihX2bTzQDGMdmQxpKegA6ezuqDUo2H%2BJfClA0ZfJxNHis62wu7nNpkogH9vDKLfdJp2t5QtltuSnpTO6RF15bkMXMGxuLOdbkFUCpkZ6KZ%2Bmt0ingOfRl63x57J96JhG6IlRRRUK8k9ClaZXShiExu9dJQIa0%2FoZQ%3D%3D&Expires=1771071737) - マケデコ勉強会 
-2024/05/23 
- 
-Optiver 2023 勉強会 
-データの基礎的な解析＋1st Solution
+Kaggleで開催されたコンペティション「Optiver - Trading at the Close」の上位解法および参加者による振り返りを共有する勉強会。Nasdaqのクロージング・クロス（大引け）直前の10分間における株価変動を予測する課題に対し、データの基礎解析、銀メダル獲得解法、および上位解法の比較分析が発表された。
 
--
-Yuichiro Nishimoto 
--
-Twitter: @...
+\--------------------------------------------------------------------------------
 
-4. [optiverkonheYi-Shi-Lu.markdown](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/41285876/0f253ba4-a643-4319-88a1-64ec4bab3695/optiverkonheYi-Shi-Lu.markdown?AWSAccessKeyId=ASIA2F3EMEYEQTYUCFT5&Signature=WRpakPz24iLGHeE2H7rFwJo6VhM%3D&x-amz-security-token=IQoJb3JpZ2luX2VjEDwaCXVzLWVhc3QtMSJHMEUCIDsltygbPMVOzVMF7HCOR8OWsN44j296NtyMDn96jaG1AiEAtdVn2rZ75v0hqVJnk4dRAmHR8KNGbePgdguhvNBEV6Qq8wQIBBABGgw2OTk3NTMzMDk3MDUiDNDKS31wvP52s1RTgyrQBON769HlIYOc0qnkRY%2Frmc%2FWVqw4V4fB88aN3ryDkUxVOVs3FBcxrdMN4XT6MTXbANWtJKAjbF4LCYCzlHja%2BUbKHd5wkg68g7MHbdxaRbBdHB8%2BvdR0zmDJGoUb6bo8iDI0X5YTpZ6F%2B9JBXElA5zywOaVYzSf0QR1UqcdI7SvZPgCrpOYgyySiAcn%2Bs7EpLZJX1qizK9Lw1hexIdLH9y7hzzjuhPW4FLqhNyYU4mo%2B5hyL%2BMgvMrSBPyJUZmE3B2iWuwRe%2FWjNBrwM6zTYj%2B9XdrdPwH%2B8NFDoj2vHT3H%2Fl3AZkCcJpwVUgGgD02rp09qacEOM5iIp0tdL1cmm6qPzBSGpWmGLK%2FhBVPA6kA%2F8DtOxvT%2B%2BdcwyBlW8LksEaodGGYsrlwzDa0UQliH8BppdNWFrg8oFDXdWDSqigEFN2JfNQUKR2tgIxtHLioKvjxzP6cmGucWRl7y4g7fLJxtnsJhC13WGltQZt6nqCRiEDETn5%2B719KinMsawhoZNTChNdKzclQStBGj2sx1nzLnZ7nAJ1Z7NEvpoE8kaZYjMtD%2FTF4kst8AqaDJploTzuVIOqzW2Fu0HdvlghoS%2FfT4mBZukm55kwug%2BifcZK24h1DXQZXl7TfksW6nUgFZhnDHj1ZK5TgwdMJGJuq%2FsCTIKYwMfEQLf1LwUzafFWVjwLvoVOeTBdxy2xPR9CJKbkwAewgMDIj19nY7BeqWiMM7EuW4c%2FUYEhkD4RYf9kV3gljFgnrIlOsctNotHnjvXncREw62P%2BLzz7vegK%2FA0ugwwyrDBzAY6mAEOWfObM7w48iUJFWv8ouuxb%2BQ%2BoNFGl6CAS3ECs3f7pihX2bTzQDGMdmQxpKegA6ezuqDUo2H%2BJfClA0ZfJxNHis62wu7nNpkogH9vDKLfdJp2t5QtltuSnpTO6RF15bkMXMGxuLOdbkFUCpkZ6KZ%2Bmt0ingOfRl63x57J96JhG6IlRRRUK8k9ClaZXShiExu9dJQIa0%2FoZQ%3D%3D&Expires=1771071737) - マケデコ「Optiverコンペ Kaggle上位解法勉強会」議事録
+2. 発表内容
 
-**開催日時**: 2024年5月23日 19:30〜 **主催**: マケデコ (Market API Developer Co...
+(1) データの基礎解析 ＋ 1st Solution 解法共有
 
-5. [Leveraging Limit Order Book Imbalances for Profitable Trading](https://electronictradinghub.com/leveraging-limit-order-book-imbalances-for-profitable-trading-a-deep-dive-into-recent-research-and-practical-tools/) - This article has taken a deep dive into the concept of Limit Order Book (LOB) imbalances and their p...
+**発表者**: 西本氏（nishimoto）
 
-6. [Impact of High‐Frequency Trading with an Order Book Imbalance ...](https://onlinelibrary.wiley.com/doi/10.1155/2023/3996948) - In the present study, we analysed the impacts of HFT taking into account the correlation between ord...
+• **コンペ概要とデータ解析**:
 
-7. [Gradient Boosting Decision Tree with LSTM for Investment ...](https://arxiv.org/html/2505.23084v1) - This paper proposes a hybrid modeling framework that synergistically integrates LSTM (Long Short-Ter...
+  ◦ **課題**: 米国株式市場の終了直前10分間のボラティリティと価格変動を予測する。評価指標はMAE。
 
-8. [Machine Learning in Financial Markets: Applications, Effectiveness ...](https://www.subex.com/blog/machine-learning-in-financial-markets-applications-effectiveness-and-limitations/) - Adaptive algorithms allow machine learning models to adjust and learn from new patterns and market c...
+  ◦ **データ**: 200銘柄 × 481日分。需給（Bid/Ask）、価格、出来高など17列の基本データが提供された。
 
-9. [[PDF] Online Adaptive Machine Learning Based Algorithm for Implied ...](https://arxiv.org/pdf/1706.01833.pdf) - A handful of financial applications using adaptive machine learning models have been recently develo...
+  ◦ **特徴**: ターゲット（目的変数）の分布は裾が広く、極端な値が含まれる。また、インバランス（需給の偏り）系の特徴量がターゲットと高い相関を示した。
 
-10. [Market Neutral Strategies](https://hedgenordic.com/wp-content/uploads/2015/12/MarketNeutralReport_2015-1.pdf) - A dollar neutral strategy has zero net investment (i.e., equal dollar amounts in long and short posi...
+• **1位解法（HYD氏）の分析**:
 
-11. [Market Neutral Strategy | Definition + Portfolio Construction](https://www.wallstreetprep.com/knowledge/market-neutral-strategy/) - The market neutral strategy is designed to profit from fluctuations in the pricing of securities, wh...
+  ◦ **モデル構成**: **CatBoost (0.5) + GRU (0.3) + Transformer (0.2)** のアンサンブル。GBDT（決定木）とNN（ニューラルネット）を組み合わせている。
 
-12. [liyiyan128/optiver-trading-at-the-close](https://github.com/liyiyan128/optiver-trading-at-the-close) - The competition goal is to predict the future price movements of stocks relative to the price future...
+  ◦ **勝因（Magic Features）**: 特定の時間帯（0-300秒、300-480秒、480秒以降）でグループ化し、その中での「初期値との比率」や「移動平均との比率」をとる特徴量が有効であった。
 
+  ◦ **オンライン学習**: 評価期間中に追加されるデータを使ってモデルを再学習（12日ごと）させたことがスコア向上に大きく寄与した。
+
+(2) Optiver参戦記 & 銀メダル解法
+
+**発表者**: tonic氏（89位 / 銀メダル）
+
+• **解法アプローチ**:
+
+  ◦ **モデル**: **LightGBM (0.61) + Transformer (0.39)** のアンサンブル。
+
+  ◦ **特徴量**: 462個の特徴量を作成。各ペアの乖離、インバランス、日内のローリング集約、データセット全体でのグループエンコーディングなどを採用。
+
+  ◦ **Transformerの活用**: 銘柄間の相関（Cross-sectional）を捉えるためにTransformer Encoderを使用。GBDTとは異なる予測特性を持ち、アンサンブルでの寄与度が大きかった（重み約4割）。
+
+• **反省点・上位との差分**:
+
+  ◦ **オンライン学習の欠如**: 計算リソースと時間の制約から再学習を実装できず、ドメインシフト（学習データとテストデータの乖離）に対応しきれなかった点が最大の敗因と分析。
+
+  ◦ **時系列ベクトルの扱い**: GRUやCNNなど、時系列方向の情報をうまく扱うモデルの検討が不足していた。
+
+  ◦ **失敗した試行**: ターゲットを符号と絶対値に分けて予測する2-stage予測や、ボラティリティ予測による補正は効果がなかった。
+
+(3) 上位解法モデル比較
+
+**発表者**: richwomanbtc氏（1836位）
+
+• **上位解法の傾向分析**:
+
+  ◦ 上位陣は共通して「Treeモデル（GBDT）と時系列NNのアンサンブル」「オンライン学習」「時間枠でグループ化した特徴量」「ポストプロセッシング（予測値の合計を0にする等の補正）」を採用していた。
+
+  ◦ 6位はNN単独、9位はXGBoost単独など、バリエーションも存在した。
+
+• **再現実験と考察**:
+
+  ◦ 7位解法をベースに、同一の特徴量を用いて複数モデル（LightGBM, CatBoost, CNN, GRU, LSTM, Transformer）の性能を比較検証。
+
+  ◦ **結果**: 単体モデルではLightGBMが最も精度が高かった。NNモデル群（CNN, LSTM等）も健闘したが、GBDT系の方が扱いやすく精度が出やすい傾向が見られた。
+
+  ◦ **特徴量の重要性**: 「時間帯ごとのグループ化」や「中央値からの乖離」といった、市場構造を反映した特徴量が有効であった。
+
+\--------------------------------------------------------------------------------
+
+3. 質疑応答・主な議論
+
+• **オンライン学習への気づき**: データIDごとの相関係数の推移を見ると、古いデータほど相関が弱くなっている傾向があったため、そこから直近データを重視する（オンライン学習）必要性に気づけた可能性がある。
+
+• **Transformerの欠損値処理**: ファープライス（Far Price）などが前半欠損する場合、定数（1など）で埋める処理が行われていた。
+
+• **モデルの選択**: 最終的にはLightGBMなどのGBDTが強力だが、予測特性の異なるNN（Transformerなど）をアンサンブルに混ぜることでスコアが安定・向上する点が確認された。
+
+4. 所感・まとめ
+
+• 本コンペティションは「シェイク（順位変動）」が少なく、適切なデータ分析とエンジニアリング（特にオンライン学習と特徴量作成）を行った参加者が報われるロバストな設計であった。
+
+• 上位に入るには、GBDTだけでなくNNを含めた多様なモデルのアンサンブルと、計算コストのかかるオンライン学習を実装しきるエンジニアリング力が求められた。
+
+---
+
+## 参考資料
+
+### ローカルファイル（本リポジトリ内）
+- [^1]: `Optiver参戦記_銀メダル解法.pdf` — tonic氏（89位・銀メダル）の発表スライド
+- [^2]: `makedeco-optiver-main/slide/slide.md` — richwomanbtc氏の上位解法まとめスライド
+- [^3]: `docswell-K6YQ3E.pdf` — 西本氏のデータ基礎解析＋1位解法分析スライド
+- [^4]: 勉強会議事録（本ドキュメント付録Aに統合済み）
+
+### Kaggle Discussion（外部リンク）
+- [^5]: [Leveraging Limit Order Book Imbalances for Profitable Trading](https://electronictradinghub.com/leveraging-limit-order-book-imbalances-for-profitable-trading-a-deep-dive-into-recent-research-and-practical-tools/)
+- [^6]: [Impact of HFT with Order Book Imbalance](https://onlinelibrary.wiley.com/doi/10.1155/2023/3996948)
+- [^7]: [Gradient Boosting Decision Tree with LSTM for Investment](https://arxiv.org/html/2505.23084v1)
+- [^8]: [Machine Learning in Financial Markets](https://www.subex.com/blog/machine-learning-in-financial-markets-applications-effectiveness-and-limitations/)
+- [^9]: [Online Adaptive ML for Implied Volatility](https://arxiv.org/pdf/1706.01833.pdf)
+- [^10]: [Market Neutral Strategies](https://hedgenordic.com/wp-content/uploads/2015/12/MarketNeutralReport_2015-1.pdf)
+- [^11]: [Market Neutral Strategy](https://www.wallstreetprep.com/knowledge/market-neutral-strategy/)
+- [^12]: [Optiver Trading at the Close - GitHub](https://github.com/liyiyan128/optiver-trading-at-the-close)
+
+### Kaggle上位解法 Discussion
+- 1st place: https://www.kaggle.com/competitions/optiver-trading-at-the-close/discussion/487446
+- 6th place: https://www.kaggle.com/competitions/optiver-trading-at-the-close/discussion/486040
+- 7th place: https://www.kaggle.com/competitions/optiver-trading-at-the-close/discussion/486157
+- 9th place: https://www.kaggle.com/competitions/optiver-trading-at-the-close/discussion/486237
+
+> **注記**: 本ドキュメントはPerplexityによって生成され、上記の発表資料と議事録を統合・分析したものである。
+> 参照番号 [^1]～[^12] は元のPerplexity出力に基づく。S3一時URLは永続的なローカルファイル参照に置換済み。
